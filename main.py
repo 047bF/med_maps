@@ -16,6 +16,7 @@ yandex = '83702ac8-dc4d-4ac7-9dd4-37f625766a9c'
 
 """
 добавить:
+    M1 + pandas? docker/conda
     пропуск страниц в параметрах (как в начале так и в конце, перечислением)
     пропуск лишних строк в параметрах (как в начале так и в конце, перечислением)
     работа в цикле по странице
@@ -78,10 +79,6 @@ def parse_arg():
 
 
 def parse_page(page):
-    #print(page)
-    # sheet = wb_obj["1.1.Бизнес"]
-    # print(wb_obj.sheetnames)
-    # print(page["A30"].value)
     for row in page.iter_rows(max_row=6):
         for cell in row:
             print(cell.value, end=" ")
@@ -109,16 +106,12 @@ def parse_map(sheet):
     point_type = 'pm2grm'
     for row in sheet.rows:
         sheet_row_num += 1
-        #print(sheet_row_num)
         if sheet_row_num < 2:
             continue
-        if row[0].value != None:
-            #elif sheet_row_num > 181:
-            #    break
+        if row[0].value is not None:
             cell = row[0].value
             clean_cell = make_clean_cell(cell)
             cell_row_num = 0
-            org_name = ''
             for row in clean_cell:
                 full_row_on_sheet += 1
                 cell_row_num += 1
@@ -148,7 +141,6 @@ def parse_map(sheet):
         print('https://static-maps.yandex.ru/1.x/?ll=30.361954,59.950406&z=11&l=map&pt=' + point[:-1])
         print(row)
         map_point = requests.get('https://static-maps.yandex.ru/1.x/?l=map&pt=' + point[:-1])
-
 
 
 def make_clean_cell(line):
